@@ -3,15 +3,16 @@ from config import *
 
 #button class
 class Button():
-	def __init__(self, x, y, image, text, scale):
-		width = image.get_width()
-		height = image.get_height()
-		self.font = pygame.font.Font(os.path.join("resources", "fonts", "PixeloidSans-Bold.ttf"), 40)
-		self.font_img = self.font.render(text, True, (255, 255, 255))
-		self.image = pygame.transform.scale(image, (int(width * scale), int(height * scale)))
-		self.rect = self.image.get_rect()
-		self.rect.topleft = (x, y)
+	def __init__(self, x, y, text, size):
+		self.text = text
+		self.font = pygame.font.Font(os.path.join("resources", "fonts", "PixeloidSans-Bold.ttf"), size)
+		self.font_img = self.font.render(text, True, (198, 189, 0))
+		self.font_img_hovered = self.font.render(text, True, (78, 69, 0))
+		self.font_img_glow = self.font.render(text, True, (11, 11, 11))
+		self.rect = self.font_img.get_rect()
+		self.rect.center = (x, y)
 		self.clicked = False
+		self.hovered = False
 
 	def draw(self, screen):
 		action = False
@@ -20,15 +21,21 @@ class Button():
 
 		#check mouseover and clicked conditions
 		if self.rect.collidepoint(pos):
+			self.hovered = True
 			if pygame.mouse.get_pressed()[0] == 1 and self.clicked == False:
 				self.clicked = True
 				action = True
+		else:
+			self.hovered = False
 
 		if pygame.mouse.get_pressed()[0] == 0:
 			self.clicked = False
 
 		#draw button on screen
-		screen.blit(self.image, (self.rect.x, self.rect.y))
-		screen.blit(self.font_img, ((self.rect.x + self.rect.width / 2) - (self.font_img.get_width() / 2), (self.rect.y + self.rect.height / 2) - (self.font_img.get_height() / 2)))
+		screen.blit(self.font_img_glow, (self.rect.x - 5, self.rect.y + 10))
+		if not self.hovered:
+			screen.blit(self.font_img, (self.rect.x, self.rect.y))
+		else:
+			screen.blit(self.font_img_hovered, (self.rect.x, self.rect.y))
 
 		return action
