@@ -38,7 +38,7 @@ class Player():
         if keys[pygame.K_s]:
             self.rect.y += 10
         if keys[pygame.K_r]:
-            self.health -= 1
+            self.health -= 10
 
 
     def draw(self, screen, camera):
