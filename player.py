@@ -21,4 +21,4 @@ class Player():
 
 
     def draw(self, screen, camera):
-        pygame.draw.rect(screen, self.color, (self.rect.x - camera.rect.x, self.rect.y - camera.rect.y, TILE_SIZE, TILE_SIZE))
+        pygame.draw.rect(screen, self.color, (self.rect.x - camera.position.x, self.rect.y - camera.position.y, TILE_SIZE, TILE_SIZE))
