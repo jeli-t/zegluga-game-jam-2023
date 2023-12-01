@@ -8,6 +8,13 @@ from menu import *
 # Initialize Pygame
 pygame.init()
 
+# Initialize the Pygame Music Mixer
+pygame.mixer.init()
+# Load the main music
+pygame.mixer.music.load(os.path.join("resources", "music", "CrisisCorridor.mp3"), "mp3")
+# Play the music in an infinite loop
+pygame.mixer.music.play(-1)
+
 
 class Game:
     def __init__(self):
