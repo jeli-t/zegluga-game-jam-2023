@@ -1,0 +1,9 @@
+Concept:
+
+1. Level design: 
+	- 2d zelda-style labolatory
+
+2. Gameplay:
+	- zombie escape
+	- 2 weapons
+	- 
