@@ -24,9 +24,8 @@ class Player():
         self.color = (255, 0, 0)
         self.health = 227
         image = pygame.image.load("resources\player_idle\idle.png").convert_alpha()
-        self.frames = [image.subsurface((i * TILE_SIZE, 0, TILE_SIZE, TILE_SIZE)) for i in range(2)]
-        self.rect = self.frames[0].get_rect()
-        self.rect = pygame.Rect(WINDOW_WIDTH // 2 - TILE_SIZE // 2, WINDOW_HEIGHT // 2 - TILE_SIZE // 2, TILE_SIZE, TILE_SIZE)
+        self.frames = [pygame.transform.scale(image.subsurface((i * TILE_SIZE, 0, TILE_SIZE, TILE_SIZE)), (TILE_SIZE * 2, TILE_SIZE * 2)) for i in range(2)]
+        self.rect = pygame.Rect(WINDOW_WIDTH // 2 - TILE_SIZE // 2, WINDOW_HEIGHT // 2 - TILE_SIZE // 2, TILE_SIZE * 2, TILE_SIZE * 2)
         self.current_frame = 0
         self.last_frame_change = pygame.time.get_ticks()
         self.frame_duration = 500
