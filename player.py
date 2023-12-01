@@ -2,27 +2,23 @@ import pygame
 from config import *
 
 class Player():
-    def __init__(self, x, y, color):
-        self.x = x
-        self.y = y
-        self.color = color
-        self.rect = (x, y, 10, 10)
+    def __init__(self):
+        self.color = (255, 0, 0)
+        self.rect = pygame.Rect(WINDOW_WIDTH // 2 - TILL_SIZE // 2, WINDOW_HEIGHT // 2 - TILL_SIZE // 2, TILL_SIZE, TILL_SIZE)
 
 
     def move(self):
         keys = pygame.key.get_pressed()
 
         if keys[pygame.K_a]:
-            self.x -= 10
+            self.rect.x -= 10
         if keys[pygame.K_d]:
-            self.x += 10
+            self.rect.x += 10
         if keys[pygame.K_w]:
-            self.y -= 10
+            self.rect.y -= 10
         if keys[pygame.K_s]:
-            self.y += 10
-
-        self.rect = (self.x, self.y, TILL_SIZE, TILL_SIZE)
+            self.rect.y += 10
 
 
-    def draw(self, screen):
-        pygame.draw.rect(screen, self.color, self.rect)
+    def draw(self, screen, camera):
+        pygame.draw.rect(screen, self.color, (self.rect.x - camera.rect.x, self.rect.y - camera.rect.y, TILL_SIZE, TILL_SIZE))
