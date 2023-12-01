@@ -7,7 +7,7 @@ class Button():
 		width = image.get_width()
 		height = image.get_height()
 		self.font = pygame.font.Font(os.path.join("resources", "fonts", "PixeloidSans-Bold.ttf"), 40)
-		self.fontImg = self.font.render(text, True, (255, 255, 255))
+		self.font_img = self.font.render(text, True, (255, 255, 255))
 		self.image = pygame.transform.scale(image, (int(width * scale), int(height * scale)))
 		self.rect = self.image.get_rect()
 		self.rect.topleft = (x, y)
@@ -29,6 +29,6 @@ class Button():
 
 		#draw button on screen
 		screen.blit(self.image, (self.rect.x, self.rect.y))
-		screen.blit(self.fontImg, ((self.rect.x + self.rect.width / 2) - (self.fontImg.get_width() / 2), (self.rect.y + self.rect.height / 2) - (self.fontImg.get_height() / 2)))
+		screen.blit(self.font_img, ((self.rect.x + self.rect.width / 2) - (self.font_img.get_width() / 2), (self.rect.y + self.rect.height / 2) - (self.font_img.get_height() / 2)))
 
 		return action

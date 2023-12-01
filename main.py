@@ -3,7 +3,7 @@ import sys
 from config import *
 from player import *
 from level import *
-from mainMenu import *
+from main_menu import *
 
 # Initialize Pygame
 pygame.init()

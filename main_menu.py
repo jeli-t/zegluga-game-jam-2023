@@ -6,11 +6,11 @@ class MainMenu:
     def __init__(self):
         self.font = pygame.font.Font(os.path.join("resources", "fonts", "PixeloidSans-Bold.ttf"), 40)
         self.fontImg = self.font.render(GAME_TITLE, True, (255, 255, 255))
-        self.startBtnImg = pygame.image.load("resources/startBtn.png").convert_alpha()
-        self.startBtn = Button((WINDOW_WIDTH / 2) - (self.startBtnImg.get_width() / 2), 70, self.startBtnImg, "Start", 1)
+        self.start_btn_img = pygame.image.load("resources/button.png").convert_alpha()
+        self.start_btn = Button((WINDOW_WIDTH / 2) - (self.start_btn_img.get_width() / 2), 70, self.start_btn_img, "Start", 1)
         
     def draw(self, screen):
         screen.fill((30, 30, 30))
         screen.blit(self.fontImg, ((WINDOW_WIDTH / 2) - (self.fontImg.get_width() / 2), 20))
-        if self.startBtn.draw(screen):
+        if self.start_btn.draw(screen):
             exit(0)
