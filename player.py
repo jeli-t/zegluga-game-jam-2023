@@ -22,8 +22,14 @@ class Hud():
 class Player():
     def __init__(self):
         self.color = (255, 0, 0)
-        self.rect = pygame.Rect(WINDOW_WIDTH // 2 - TILE_SIZE // 2, WINDOW_HEIGHT // 2 - TILE_SIZE // 2, TILE_SIZE, TILE_SIZE)
         self.health = 227
+        image = pygame.image.load("resources\player_idle\idle.png").convert_alpha()
+        self.frames = [image.subsurface((i * TILE_SIZE, 0, TILE_SIZE, TILE_SIZE)) for i in range(2)]
+        self.rect = self.frames[0].get_rect()
+        self.rect = pygame.Rect(WINDOW_WIDTH // 2 - TILE_SIZE // 2, WINDOW_HEIGHT // 2 - TILE_SIZE // 2, TILE_SIZE, TILE_SIZE)
+        self.current_frame = 0
+        self.last_frame_change = pygame.time.get_ticks()
+        self.frame_duration = 500
 
 
     def move(self):
@@ -42,4 +48,9 @@ class Player():
 
 
     def draw(self, screen, camera):
-        pygame.draw.rect(screen, self.color, (self.rect.x - camera.position.x, self.rect.y - camera.position.y, TILE_SIZE, TILE_SIZE))
+        now = pygame.time.get_ticks()
+        if now - self.last_frame_change > self.frame_duration:
+            self.current_frame = (self.current_frame + 1) % 2
+            self.image = self.frames[self.current_frame]
+            self.last_frame_change = now
+        screen.blit(self.frames[self.current_frame], (self.rect.x - camera.position.x, self.rect.y - camera.position.y, TILE_SIZE, TILE_SIZE))
