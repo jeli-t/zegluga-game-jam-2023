@@ -4,7 +4,7 @@ from config import *
 class Player():
     def __init__(self):
         self.color = (255, 0, 0)
-        self.rect = pygame.Rect(WINDOW_WIDTH // 2 - TILL_SIZE // 2, WINDOW_HEIGHT // 2 - TILL_SIZE // 2, TILL_SIZE, TILL_SIZE)
+        self.rect = pygame.Rect(WINDOW_WIDTH // 2 - TILE_SIZE // 2, WINDOW_HEIGHT // 2 - TILE_SIZE // 2, TILE_SIZE, TILE_SIZE)
 
 
     def move(self):
@@ -21,4 +21,4 @@ class Player():
 
 
     def draw(self, screen, camera):
-        pygame.draw.rect(screen, self.color, (self.rect.x - camera.rect.x, self.rect.y - camera.rect.y, TILL_SIZE, TILL_SIZE))
+        pygame.draw.rect(screen, self.color, (self.rect.x - camera.rect.x, self.rect.y - camera.rect.y, TILE_SIZE, TILE_SIZE))

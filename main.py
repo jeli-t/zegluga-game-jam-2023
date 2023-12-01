@@ -12,6 +12,7 @@ class Game:
     def __init__(self):
         self.screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
         pygame.display.set_caption("Plague")
+        self.level = Level()
         self.camera = Camera()
         self.player = Player()
         self.main_loop()
@@ -19,6 +20,7 @@ class Game:
 
     def render(self):
         self.screen.fill((0, 0, 0))
+        self.level.render(self.screen, self.camera)
         self.player.draw(self.screen, self.camera)
         pygame.display.update()
 
@@ -29,7 +31,7 @@ class Game:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
-            
+
             self.player.move()
             self.camera.update(self.player)
             self.render()
