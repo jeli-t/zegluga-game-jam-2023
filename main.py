@@ -16,7 +16,7 @@ class Game:
         self.level = Level()
         self.camera = Camera()
         self.player = Player()
-        self.mainMenu = MainMenu()
+        MainMenu(self.screen)
         self.main_loop()
 
 
@@ -24,7 +24,6 @@ class Game:
         self.screen.fill((0, 0, 0))
         self.level.render(self.screen, self.camera)
         self.player.draw(self.screen, self.camera)
-        self.mainMenu.draw(self.screen);
         pygame.display.update()
 
 
