@@ -60,9 +60,8 @@ class Game:
                     pygame.quit()
                     sys.exit()
                 elif event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_ESCAPE:
-                        pygame.quit()
-                        sys.exit()
+                    if event.key == pygame.K_ESCAPE and not self.game_over:
+                        InGameMenu(self.screen)
 
             if self.player.health <= 0:
                 self.cutscene = True
