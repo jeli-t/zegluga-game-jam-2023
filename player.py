@@ -56,23 +56,27 @@ class Player():
         if keys[pygame.K_a]:
             self.position.x -= 10
             if pygame.sprite.spritecollide(self, map.hard_tiles, dokill=False):
-                self.position.x += 10
+                offset = TILE_SIZE * 2 - self.rect.x % (TILE_SIZE * 2)
+                self.position.x += offset
             else:
                 self.direction = 'left'
         if keys[pygame.K_d]:
             self.position.x += 10
             if pygame.sprite.spritecollide(self, map.hard_tiles, dokill=False):
-                self.position.x -= 10
+                offset = TILE_SIZE * 2 - self.rect.x % (TILE_SIZE * 2)
+                self.position.x -= offset
             else:
                 self.direction = 'right'
         if keys[pygame.K_w]:
             self.position.y -= 10
             if pygame.sprite.spritecollide(self, map.hard_tiles, dokill=False):
-                self.position.y += 10
+                offset = TILE_SIZE * 2 - self.rect.y % (TILE_SIZE * 2)
+                self.position.y += offset
         if keys[pygame.K_s]:
             self.position.y += 10
             if pygame.sprite.spritecollide(self, map.hard_tiles, dokill=False):
-                self.position.y -= 10
+                offset = TILE_SIZE * 2 - self.rect.x % (TILE_SIZE * 2)
+                self.position.y -= offset
         if keys[pygame.K_r]:
             self.health -= 10
 
