@@ -25,7 +25,7 @@ class Player():
         self.color = (255, 0, 0)
         self.health = 228
         self.position = Vector2(WINDOW_WIDTH // 2 - TILE_SIZE // 2, WINDOW_HEIGHT // 2 - TILE_SIZE // 2)
-        self.rect = pygame.Rect(self.position.x, self.position.y, TILE_SIZE * 4, TILE_SIZE * 4)
+        self.rect = pygame.Rect(self.position.x, self.position.y, PLAYER_SIZE, PLAYER_SIZE)
         self.direction = 'left'
         self.moving = False
         self.speed = 10
@@ -43,7 +43,7 @@ class Player():
         if self.direction == 'left':
             image = pygame.transform.flip(image, True, False)
         self.frames_number = animations[animation_name][1]
-        self.frames = [pygame.transform.scale(image.subsurface((i * TILE_SIZE, 0, TILE_SIZE, TILE_SIZE)), (TILE_SIZE * 4, TILE_SIZE * 4)) for i in range(self.frames_number)]
+        self.frames = [pygame.transform.scale(image.subsurface((i * TILE_SIZE, 0, TILE_SIZE, TILE_SIZE)), (PLAYER_SIZE, PLAYER_SIZE)) for i in range(self.frames_number)]
         self.frame_duration = animations[animation_name][2]
         self.current_frame = 0
         self.last_frame_change = pygame.time.get_ticks()
@@ -56,21 +56,21 @@ class Player():
         direction = self.direction
 
         if keys[pygame.K_a]:
-            self.test_collisions(pygame.Rect(self.rect.x - self.speed, self.rect.y, TILE_SIZE * 4, TILE_SIZE * 4), map.hard_tiles)
+            self.test_collisions(pygame.Rect(self.rect.x - self.speed, self.rect.y, PLAYER_SIZE, PLAYER_SIZE), map.hard_tiles)
             if not self.collisions['left']:
                 self.position.x -= self.speed
                 self.direction = 'left'
         if keys[pygame.K_d]:
-            self.test_collisions(pygame.Rect(self.rect.x + self.speed, self.rect.y, TILE_SIZE * 4, TILE_SIZE * 4), map.hard_tiles)
+            self.test_collisions(pygame.Rect(self.rect.x + self.speed, self.rect.y, PLAYER_SIZE, PLAYER_SIZE), map.hard_tiles)
             if not self.collisions['right']:
                 self.position.x += self.speed
                 self.direction = 'right'
         if keys[pygame.K_w]:
-            self.test_collisions(pygame.Rect(self.rect.x, self.rect.y - self.speed, TILE_SIZE * 4, TILE_SIZE * 4), map.hard_tiles)
+            self.test_collisions(pygame.Rect(self.rect.x, self.rect.y - self.speed, PLAYER_SIZE, PLAYER_SIZE), map.hard_tiles)
             if not self.collisions['top']:
                 self.position.y -= self.speed
         if keys[pygame.K_s]:
-            self.test_collisions(pygame.Rect(self.rect.x, self.rect.y + self.speed, TILE_SIZE * 4, TILE_SIZE * 4), map.hard_tiles)
+            self.test_collisions(pygame.Rect(self.rect.x, self.rect.y + self.speed, PLAYER_SIZE, PLAYER_SIZE), map.hard_tiles)
             if not self.collisions['bottom']:
                 self.position.y += self.speed
         if keys[pygame.K_r]:
@@ -110,4 +110,4 @@ class Player():
         if now - self.last_frame_change > self.frame_duration:
             self.current_frame = (self.current_frame + 1) % self.frames_number
             self.last_frame_change = now
-        screen.blit(self.frames[self.current_frame], (self.rect.x, self.rect.y, TILE_SIZE * 4, TILE_SIZE * 4))
+        screen.blit(self.frames[self.current_frame], (self.rect.x, self.rect.y, PLAYER_SIZE, PLAYER_SIZE))

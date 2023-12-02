@@ -41,7 +41,7 @@ class Game:
 
 
     def render(self):
-        self.screen.fill((0, 0, 0))
+        self.screen.fill((66, 59, 77))
         self.level.render(self.screen, self.camera)
         self.player.draw(self.screen, self.camera)
         if self.game_over:
