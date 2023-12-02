@@ -23,12 +23,22 @@ class Player():
     def __init__(self):
         self.color = (255, 0, 0)
         self.health = 227
-        image = pygame.image.load("resources\player_idle\idle.png").convert_alpha()
-        self.frames = [pygame.transform.scale(image.subsurface((i * TILE_SIZE, 0, TILE_SIZE, TILE_SIZE)), (TILE_SIZE * 2, TILE_SIZE * 2)) for i in range(2)]
+        self.current_animation = "idle"
+        self.load_animation(self.current_animation)
+
+
+    def load_animation(self, animation_name):
+        # "animation_name":["path_to_assets", number_of_assets, frame_duration]
+        animations = {"idle":["resources\player_idle\idle.png", 2, 500],
+                    "run":["resources\player_run\\run_fix.png", 7, 50],
+                    "death":["resources\player_death\death.png", 4, 500]}
+        image = pygame.image.load(animations[animation_name][0]).convert_alpha()
+        self.frames_number = animations[animation_name][1]
+        self.frames = [pygame.transform.scale(image.subsurface((i * TILE_SIZE, 0, TILE_SIZE, TILE_SIZE)), (TILE_SIZE * 2, TILE_SIZE * 2)) for i in range(self.frames_number)]
+        self.frame_duration = animations[animation_name][2]
         self.rect = pygame.Rect(WINDOW_WIDTH // 2 - TILE_SIZE // 2, WINDOW_HEIGHT // 2 - TILE_SIZE // 2, TILE_SIZE * 2, TILE_SIZE * 2)
         self.current_frame = 0
         self.last_frame_change = pygame.time.get_ticks()
-        self.frame_duration = 500
 
 
     def move(self):
@@ -49,7 +59,7 @@ class Player():
     def draw(self, screen, camera):
         now = pygame.time.get_ticks()
         if now - self.last_frame_change > self.frame_duration:
-            self.current_frame = (self.current_frame + 1) % 2
+            self.current_frame = (self.current_frame + 1) % self.frames_number
             self.image = self.frames[self.current_frame]
             self.last_frame_change = now
         screen.blit(self.frames[self.current_frame], (self.rect.x - camera.position.x, self.rect.y - camera.position.y, TILE_SIZE, TILE_SIZE))
