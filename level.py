@@ -30,21 +30,27 @@ class Room(pygame.sprite.Sprite):
 
 
 class Map():
-    def __init__(self, file='maps/SampleMap.tmx'):
-        self.tile_group = pygame.sprite.Group()
+    def __init__(self, file='maps/main_floor.tmx'):
+        self.soft_tiles = pygame.sprite.Group()     # tiles that do not collide with the player
+        self.hard_tiles = pygame.sprite.Group()     # tiles that collide with the player
         self.rooms = self.load_level(file)
 
     def render(self, screen, camera):
-        self.tile_group.update(camera)
-        self.tile_group.draw(screen)
+        self.soft_tiles.update(camera)
+        self.soft_tiles.draw(screen)
+        self.hard_tiles.update(camera)
+        self.hard_tiles.draw(screen)
 
-    def load_level(self, file='maps/SampleMap.tmx'):
+    def load_level(self, file='maps/main_floor.tmx'):
         tmx_data = load_pygame(file)
         for layer in tmx_data.visible_layers:
             if hasattr(layer, 'data'):
                 for x,y,surf in layer.tiles():
                     offset = Vector2(x * TILE_SIZE * 2, y * TILE_SIZE * 2)
-                    Room(offset = offset, surf = surf, groups = self.tile_group)
+                    if layer.name == 'walls':
+                        Room(offset = offset, surf = surf, groups = self.hard_tiles)
+                    if layer.name == 'floor':
+                        Room(offset = offset, surf = surf, groups = self.soft_tiles)
 
 
 class Level():

@@ -8,18 +8,36 @@
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
+        "SampleMap.tmx": {
+            "scale": 1.7733333333333332,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 240.2255639097744,
+                "y": 240.22556390977445
+            }
+        },
+        "main_floor.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 686.6666666666666,
+                "y": 441.3333333333333
+            }
+        }
     },
     "last.exportedFilePath": "C:/Users/tomek/Documents/zegluga-game-jam-2023/maps",
     "last.imagePath": "C:/Users/tomek/Documents/zegluga-game-jam-2023/maps",
-    "map.height": 17,
+    "map.height": 30,
     "map.lastUsedExportFilter": "All Files (*)",
     "map.lastUsedFormat": "tmx",
     "map.tileHeight": 32,
     "map.tileWidth": 32,
+    "map.width": 60,
     "openFiles": [
     ],
     "project": "untitled.tiled-project",
     "recentFiles": [
+        "main_floor.tmx"
     ],
     "tileset.lastUsedFormat": "tsx"
 }
