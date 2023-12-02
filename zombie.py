@@ -7,8 +7,9 @@ class Zombie():
         self.health = health
         self.position = Vector2(x, y)
         self.rect = pygame.Rect(self.position.x, self.position.y, PLAYER_SIZE, PLAYER_SIZE)
-        self.speed = 5
-        self.direction = 'right'
+        self.speed = 2
+        self.follow_reach = 2 * TILE_SIZE * 2
+        self.direction = 'left'
         self.moving = False
         self.current_animation = "idle"
         self.load_animation(self.current_animation)
@@ -18,7 +19,7 @@ class Zombie():
         # "animation_name":["path_to_assets", number_of_assets, frame_duration]
         animations = {"idle":["resources\zombie_idle\idle.png", 3, 700],
                     "walk":["resources\zombie_walk\walk.png", 7, 200],
-                    "attack":["resources\zombie_attack\\attack.png", 5, 200],
+                    "attack":["resources\zombie_attack\\attack.png", 5, 100],
                     "death":["resources\zombie_death\death.png", 4, 200]}
         image = pygame.image.load(animations[animation_name][0]).convert_alpha()
         if self.direction == 'left':
@@ -30,9 +31,27 @@ class Zombie():
         self.last_frame_change = pygame.time.get_ticks()
 
 
+    def move(self, target):
+        if abs(self.position.x - target.x) <= self.follow_reach or abs(self.position.y - target.y) <= self.follow_reach:
+            direction_vector = target + Vector2(PLAYER_SIZE / 2, PLAYER_SIZE / 2) - pygame.math.Vector2(self.rect.center)
+            try:
+                direction_vector.normalize_ip()
+            except ValueError:
+                pass
+            self.rect.x += int(direction_vector.x * self.speed)
+            self.rect.y += int(direction_vector.y * self.speed)
+            if self.current_animation == "idle":
+                self.current_animation = "walk"
+                self.load_animation("walk")
+        else:
+            if self.current_animation == "walk":
+                self.current_animation = "idle"
+                self.load_animation("idle")
+
+
     def draw(self, screen, camera):
         now = pygame.time.get_ticks()
         if now - self.last_frame_change > self.frame_duration:
             self.current_frame = (self.current_frame + 1) % self.frames_number
             self.last_frame_change = now
-        screen.blit(self.frames[self.current_frame], (self.position.x - camera.position.x, self.position.y - camera.position.y, PLAYER_SIZE, PLAYER_SIZE))
+        screen.blit(self.frames[self.current_frame], (self.rect.x - camera.position.x, self.rect.y - camera.position.y, PLAYER_SIZE, PLAYER_SIZE))
