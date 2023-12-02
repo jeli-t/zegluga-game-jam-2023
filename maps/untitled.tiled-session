@@ -42,6 +42,14 @@
                 "x": 962,
                 "y": 481
             }
+        },
+        "playground.tmx": {
+            "scale": 2.6599999999999997,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 160.15037593984965,
+                "y": 160.15037593984962
+            }
         }
     },
     "last.exportedFilePath": "C:/Users/tomek/Documents/zegluga-game-jam-2023/maps",
@@ -58,6 +66,7 @@
     ],
     "project": "untitled.tiled-project",
     "recentFiles": [
+        "Map2.tmx",
         "main_floor.tmx",
         "SampleMap.tmx"
     ],
