@@ -31,6 +31,15 @@ class Game:
         self.main_loop()
 
 
+    def restart(self):
+        self.level = Level()
+        self.camera = Camera()
+        self.player = Player()
+        self.hud = Hud(self.player)
+        self.game_over_screen = GameOver()
+        self.game_over = False
+
+
     def render(self):
         self.screen.fill((0, 0, 0))
         self.level.render(self.screen, self.camera)
@@ -38,12 +47,7 @@ class Game:
         if self.game_over:
             self.game_over_screen.render(self.screen)
             if self.game_over_screen.start_btn.draw(self.screen):
-                self.level = Level()
-                self.camera = Camera()
-                self.player = Player()
-                self.hud = Hud(self.player)
-                self.game_over_screen = GameOver()
-                self.game_over = False
+                self.restart()
         else:
             self.hud.draw(self.screen)
         pygame.display.update()
