@@ -77,7 +77,7 @@ class Game:
                 self.game_over = True
 
             if not self.game_over:
-                self.player.move()
+                self.player.move(self.level.map)
                 self.camera.update(self.player)
                 self.hud.update()
 

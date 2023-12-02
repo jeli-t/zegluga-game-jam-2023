@@ -1,4 +1,5 @@
 import pygame
+from pygame.math import Vector2
 from config import *
 
 
@@ -23,7 +24,8 @@ class Player():
     def __init__(self):
         self.color = (255, 0, 0)
         self.health = 227
-        self.rect = pygame.Rect(WINDOW_WIDTH // 2 - TILE_SIZE // 2, WINDOW_HEIGHT // 2 - TILE_SIZE // 2, TILE_SIZE * 4, TILE_SIZE * 4)
+        self.position = Vector2(WINDOW_WIDTH // 2 - TILE_SIZE // 2, WINDOW_HEIGHT // 2 - TILE_SIZE // 2)
+        self.rect = pygame.Rect(self.position.x, self.position.y, TILE_SIZE * 4, TILE_SIZE * 4)
         self.direction = 'left'
         self.moving = False
         self.current_animation = "idle"
@@ -45,32 +47,42 @@ class Player():
         self.last_frame_change = pygame.time.get_ticks()
 
 
-    def move(self):
+    def move(self, map):
         keys = pygame.key.get_pressed()
 
-        pos = [self.rect.x, self.rect.y]
-        direction = self.direction
+        previous_position = self.position
+        previous_direction = self.direction
 
         if keys[pygame.K_a]:
-            self.rect.x -= 10
-            self.direction = 'left'
+            self.position.x -= 10
+            if pygame.sprite.spritecollide(self, map.hard_tiles, dokill=False):
+                self.position.x += 10
+            else:
+                self.direction = 'left'
         if keys[pygame.K_d]:
-            self.rect.x += 10
-            self.direction = 'right'
+            self.position.x += 10
+            if pygame.sprite.spritecollide(self, map.hard_tiles, dokill=False):
+                self.position.x -= 10
+            else:
+                self.direction = 'right'
         if keys[pygame.K_w]:
-            self.rect.y -= 10
+            self.position.y -= 10
+            if pygame.sprite.spritecollide(self, map.hard_tiles, dokill=False):
+                self.position.y += 10
         if keys[pygame.K_s]:
-            self.rect.y += 10
+            self.position.y += 10
+            if pygame.sprite.spritecollide(self, map.hard_tiles, dokill=False):
+                self.position.y -= 10
         if keys[pygame.K_r]:
             self.health -= 10
 
-        if pos[0] == self.rect.x and pos[1] == self.rect.y:
+        if previous_position == self.position:
             if self.moving:
                 self.current_animation = "idle"
                 self.load_animation("idle")
                 self.moving = False
         else:
-            if direction is not self.direction:
+            if previous_direction is not self.direction:
                 self.load_animation("run")
             if not self.moving:
                 self.current_animation = "run"
@@ -83,4 +95,4 @@ class Player():
         if now - self.last_frame_change > self.frame_duration:
             self.current_frame = (self.current_frame + 1) % self.frames_number
             self.last_frame_change = now
-        screen.blit(self.frames[self.current_frame], (self.rect.x - camera.position.x, self.rect.y - camera.position.y, TILE_SIZE, TILE_SIZE))
+        screen.blit(self.frames[self.current_frame], (self.rect.x, self.rect.y, TILE_SIZE * 4, TILE_SIZE * 4))

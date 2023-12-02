@@ -2,4 +2,4 @@ GAME_TITLE = "Crisis Corridor"
 WINDOW_WIDTH = 1920
 WINDOW_HEIGHT = 1080
 TILE_SIZE = 32
-DEV = False
+DEV = True
