@@ -28,6 +28,8 @@ class Player():
         self.rect = pygame.Rect(self.position.x, self.position.y, TILE_SIZE * 4, TILE_SIZE * 4)
         self.direction = 'left'
         self.moving = False
+        self.speed = 10
+        self.collisions = {'left' : False, 'right' : False, 'top' : False, 'bottom' : False}
         self.current_animation = "idle"
         self.load_animation(self.current_animation)
 
@@ -54,32 +56,29 @@ class Player():
         direction = self.direction
 
         if keys[pygame.K_a]:
-            self.position.x -= 10
-            if pygame.sprite.spritecollide(self, map.hard_tiles, dokill=False):
-                offset = TILE_SIZE * 2 - self.rect.x % (TILE_SIZE * 2)
-                self.position.x += offset
-            else:
+            self.test_collisions(pygame.Rect(self.rect.x - self.speed, self.rect.y, TILE_SIZE * 4, TILE_SIZE * 4), map.hard_tiles)
+            if not self.collisions['left']:
+                self.position.x -= self.speed
                 self.direction = 'left'
         if keys[pygame.K_d]:
-            self.position.x += 10
-            if pygame.sprite.spritecollide(self, map.hard_tiles, dokill=False):
-                offset = TILE_SIZE * 2 - self.rect.x % (TILE_SIZE * 2)
-                self.position.x -= offset
-            else:
+            self.test_collisions(pygame.Rect(self.rect.x + self.speed, self.rect.y, TILE_SIZE * 4, TILE_SIZE * 4), map.hard_tiles)
+            if not self.collisions['right']:
+                self.position.x += self.speed
                 self.direction = 'right'
         if keys[pygame.K_w]:
-            self.position.y -= 10
-            if pygame.sprite.spritecollide(self, map.hard_tiles, dokill=False):
-                offset = TILE_SIZE * 2 - self.rect.y % (TILE_SIZE * 2)
-                self.position.y += offset
+            self.test_collisions(pygame.Rect(self.rect.x, self.rect.y - self.speed, TILE_SIZE * 4, TILE_SIZE * 4), map.hard_tiles)
+            if not self.collisions['top']:
+                self.position.y -= self.speed
+                self.direction = 'up'
         if keys[pygame.K_s]:
-            self.position.y += 10
-            if pygame.sprite.spritecollide(self, map.hard_tiles, dokill=False):
-                offset = TILE_SIZE * 2 - self.rect.x % (TILE_SIZE * 2)
-                self.position.y -= offset
+            self.test_collisions(pygame.Rect(self.rect.x, self.rect.y + self.speed, TILE_SIZE * 4, TILE_SIZE * 4), map.hard_tiles)
+            if not self.collisions['bottom']:
+                self.position.y += self.speed
+                self.direction = 'down'
         if keys[pygame.K_r]:
-            self.health -= 10
+            self.health -= 3
 
+        # change animations depending on movement
         if pos[0] == self.position.x and pos[1] == self.position.y:
             if self.moving:
                 self.current_animation = "idle"
@@ -92,6 +91,20 @@ class Player():
                 self.current_animation = "run"
                 self.load_animation("run")
                 self.moving = True
+
+
+    def test_collisions(self, hit_box, tiles):
+        self.collisions = {'left' : False, 'right' : False, 'top' : False, 'bottom' : False}
+        for tile in tiles:
+            if hit_box.colliderect(tile.rect):
+                if hit_box.x <= tile.rect.x:
+                    self.collisions['right'] = True
+                if hit_box.x >= tile.rect.x:
+                    self.collisions['left'] = True
+                if hit_box.y >= tile.rect.y:
+                    self.collisions['top'] = True
+                if hit_box.y <= tile.rect.y:
+                    self.collisions['bottom'] = True
 
 
     def draw(self, screen, camera):
