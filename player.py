@@ -69,12 +69,10 @@ class Player():
             self.test_collisions(pygame.Rect(self.rect.x, self.rect.y - self.speed, TILE_SIZE * 4, TILE_SIZE * 4), map.hard_tiles)
             if not self.collisions['top']:
                 self.position.y -= self.speed
-                self.direction = 'up'
         if keys[pygame.K_s]:
             self.test_collisions(pygame.Rect(self.rect.x, self.rect.y + self.speed, TILE_SIZE * 4, TILE_SIZE * 4), map.hard_tiles)
             if not self.collisions['bottom']:
                 self.position.y += self.speed
-                self.direction = 'down'
         if keys[pygame.K_r]:
             self.health -= 3
 
