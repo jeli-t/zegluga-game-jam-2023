@@ -61,12 +61,16 @@ class Game:
                         sys.exit()
 
             if self.player.health <= 0:
+                self.cutscene = True
+                self.player.current_animation = "death"
+                self.player.load_animation("death")
                 self.game_over = True
 
             if not self.game_over:
                 self.player.move()
                 self.camera.update(self.player)
                 self.hud.update()
+
             self.render()
             pygame.time.Clock().tick(60)
 
