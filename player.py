@@ -1,4 +1,5 @@
 import pygame
+from pygame.math import Vector2
 from config import *
 
 
@@ -23,7 +24,8 @@ class Player():
     def __init__(self):
         self.color = (255, 0, 0)
         self.health = 227
-        self.rect = pygame.Rect(WINDOW_WIDTH // 2 - TILE_SIZE, WINDOW_HEIGHT // 2 - TILE_SIZE, TILE_SIZE * 2, TILE_SIZE * 2)
+        self.position = Vector2(WINDOW_WIDTH // 2 - TILE_SIZE // 2, WINDOW_HEIGHT // 2 - TILE_SIZE // 2)
+        self.rect = pygame.Rect(self.position.x, self.position.y, TILE_SIZE * 4, TILE_SIZE * 4)
         self.direction = 'left'
         self.moving = False
         self.current_animation = "idle"
@@ -48,30 +50,54 @@ class Player():
     def move(self, map):
         keys = pygame.key.get_pressed()
 
-        pos = [self.rect.x, self.rect.y]
+        pos = [self.position.x, self.position.y]
         direction = self.direction
 
         if keys[pygame.K_a]:
-            self.rect.x -= 10
-            collision_list = pygame.sprite.spritecollide(self, map.hard_tiles, dokill=True)
-            if collision_list:
-                self.rect.x += 10
-                print("collision: ", collision_list[0].rect.x)
-                print("Self: ", self.rect.x)
-            self.direction = 'left'
+            self.position.x -= 10
+            colliding_tiles = pygame.sprite.spritecollide(self, map.hard_tiles, dokill=False)
+            # Determine the player position whe colliding - left or right of the tile
+            # If we are on the left side, continue normal left movement
+            if colliding_tiles and self.rect.x >= colliding_tiles[0].rect.x + colliding_tiles[0].rect.width / 2:
+                # Otherwise we need to prevent the player from going further
+                offset = colliding_tiles[0].rect.x + colliding_tiles[0].rect.width - self.rect.x
+                self.position.x += offset
+            else:
+                self.direction = 'left'
         if keys[pygame.K_d]:
-            self.rect.x += 10
-            self.direction = 'right'
+            self.position.x += 10
+            colliding_tiles = pygame.sprite.spritecollide(self, map.hard_tiles, dokill=False)
+            # Determine the player position whe colliding - left or right of the tile
+            # If we are on the right side, continue normal left movement
+            if colliding_tiles and self.rect.x <= colliding_tiles[0].rect.x + colliding_tiles[0].rect.width / 2:
+                # Otherwise we need to prevent the player from going further
+                offset = (TILE_SIZE * 2) - ((colliding_tiles[0].rect.x + colliding_tiles[0].rect.width - self.rect.x) % (TILE_SIZE * 2))
+                self.position.x -= offset
+            else:
+                self.direction = 'right'
         if keys[pygame.K_w]:
-            self.rect.y -= 10
+            self.position.y -= 10
+            colliding_tiles = pygame.sprite.spritecollide(self, map.hard_tiles, dokill=False)
+            # Determine the player position whe colliding - top or bottom of the tile
+            # If we are on the top side, continue normal top movement
+            if colliding_tiles and self.rect.y + self.rect.height / 2 <= colliding_tiles[0].rect.y + colliding_tiles[0].rect.height:
+                # Otherwise we need to prevent the player from going further
+                offset = (TILE_SIZE * 2) - ((colliding_tiles[0].rect.y + colliding_tiles[0].rect.height - (self.rect.y)) % (TILE_SIZE * 2))
+                self.position.y += offset
         if keys[pygame.K_s]:
-            self.rect.y += 10
+            self.position.y += 10
+            colliding_tiles = pygame.sprite.spritecollide(self, map.hard_tiles, dokill=False)
+            # Determine the player position whe colliding - left or right of the tile
+            # If we are on the bottom side, continue normal left movement
+            if colliding_tiles and self.rect.y + self.rect.height <= colliding_tiles[0].rect.y + colliding_tiles[0].rect.height / 2:
+                # Otherwise we need to prevent the player from going further
+                print("Top")
+                # offset = (TILE_SIZE * 2) - ((colliding_tiles[0].rect.y + colliding_tiles[0].rect.height - self.rect.y) % (TILE_SIZE * 2))
+                # self.position.y -= offset
         if keys[pygame.K_r]:
             self.health -= 10
 
-        print(pos)
-
-        if pos[0] == self.rect.x and pos[1] == self.rect.y:
+        if pos[0] == self.position.x and pos[1] == self.position.y:
             if self.moving:
                 self.current_animation = "idle"
                 self.load_animation("idle")
@@ -90,4 +116,4 @@ class Player():
         if now - self.last_frame_change > self.frame_duration:
             self.current_frame = (self.current_frame + 1) % self.frames_number
             self.last_frame_change = now
-        screen.blit(self.frames[self.current_frame], (self.rect.x - camera.position.x, self.rect.y - camera.position.y, TILE_SIZE, TILE_SIZE))
+        screen.blit(self.frames[self.current_frame], (self.rect.x, self.rect.y, TILE_SIZE * 4, TILE_SIZE * 4))
