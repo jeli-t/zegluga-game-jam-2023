@@ -4,6 +4,7 @@ from config import *
 from player import *
 from level import *
 from menu import *
+from zombie import *
 
 # Initialize Pygame
 pygame.init()
@@ -23,12 +24,27 @@ class Game:
         self.level = Level()
         self.camera = Camera()
         self.player = Player()
+        self.zombies = []
+        self.init_zombies()
         self.hud = Hud(self.player)
         if not DEV:
             MainMenu(self.screen)
         self.game_over_screen = GameOver()
         self.game_over = False
         self.main_loop()
+
+
+    def init_zombies(self):
+        zombie = Zombie(100, 0, 100)
+        self.zombies.append(zombie)
+        zombie = Zombie(200, 0, 100)
+        zombie.current_animation = "walk"
+        zombie.load_animation("walk")
+        self.zombies.append(zombie)
+        zombie = Zombie(300, 0, 100)
+        zombie.current_animation = "attack"
+        zombie.load_animation("attack")
+        self.zombies.append(zombie)
 
 
     def restart(self):
@@ -44,6 +60,8 @@ class Game:
         self.screen.fill((66, 59, 77))
         self.level.render(self.screen, self.camera)
         self.player.draw(self.screen, self.camera)
+        for zombie in self.zombies:
+            zombie.draw(self.screen, self.camera)
         if self.game_over:
             self.game_over_screen.render(self.screen)
             if self.game_over_screen.start_btn.draw(self.screen):
