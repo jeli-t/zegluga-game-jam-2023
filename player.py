@@ -21,11 +21,12 @@ class Hud():
 
 
 class Player():
-    def __init__(self):
+    def __init__(self, spawn_point):
         self.color = (255, 0, 0)
         self.health = 228
         self.position = Vector2(WINDOW_WIDTH // 2 - TILE_SIZE // 2, WINDOW_HEIGHT // 2 - TILE_SIZE // 2)
         self.rect = pygame.Rect(self.position.x, self.position.y, PLAYER_SIZE, PLAYER_SIZE)
+        self.position = Vector2(spawn_point.x * TILE_SIZE * 2, spawn_point.y * TILE_SIZE * 2)
         self.direction = 'left'
         self.moving = False
         self.speed = 10

@@ -8,6 +8,14 @@
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
+        "Map1.tmx": {
+            "scale": 2,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 1049,
+                "y": 179.5
+            }
+        },
         "SampleMap.tmx": {
             "scale": 1.7733333333333332,
             "selectedLayer": 0,

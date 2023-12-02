@@ -23,7 +23,7 @@ class Game:
         pygame.display.set_caption(GAME_TITLE)
         self.level = Level()
         self.camera = Camera()
-        self.player = Player()
+        self.player = Player(self.level.player_spawn)
         self.zombies = []
         self.init_zombies()
         self.hud = Hud(self.player)

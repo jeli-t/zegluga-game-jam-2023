@@ -29,7 +29,8 @@ class Room(pygame.sprite.Sprite):
 
 
 class Map():
-    def __init__(self, file='maps/Map1.tmx'):
+    def __init__(self, level, file='maps/Map2.tmx'):
+        self.level = level
         self.soft_tiles = pygame.sprite.Group()     # tiles that do not collide with the player
         self.hard_tiles = pygame.sprite.Group()     # tiles that collide with the player
         self.rooms = self.load_level(file)
@@ -40,7 +41,7 @@ class Map():
         self.hard_tiles.update(camera)
         self.hard_tiles.draw(screen)
 
-    def load_level(self, file='maps/Map1.tmx'):
+    def load_level(self, file='maps/Map2.tmx'):
         tmx_data = load_pygame(file)
         for layer in tmx_data.visible_layers:
             if hasattr(layer, 'data'):
@@ -48,15 +49,20 @@ class Map():
                     offset = Vector2(x * TILE_SIZE * 2, y * TILE_SIZE * 2)
                     if layer.name == 'Walls':
                         Room(offset = offset, surf = surf, groups = self.hard_tiles)
-                    if layer.name == 'Collidable Assets':
+                    elif layer.name == 'Collidable Assets':
                         Room(offset = offset, surf = surf, groups = self.hard_tiles)
+                    elif layer.name == "Player Spawn":
+                        self.level.player_spawn = Vector2(x, y)
+                    elif layer.name == "Zombie Spawn":
+                        print("Zombie:", x, y)
                     else:
                         Room(offset = offset, surf = surf, groups = self.soft_tiles)
 
 
 class Level():
     def __init__(self):
-        self.map = Map()
+        self.player_spawn = (0, 0)
+        self.map = Map(self)
 
     def render(self, screen, camera):
         self.map.render(screen, camera)
