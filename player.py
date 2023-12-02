@@ -17,13 +17,13 @@ class Hud():
         screen.blit(self.health_bar_img, self.health_bar_img_rect)
 
     def update(self):
-        self.health_bar = pygame.Rect(TILE_SIZE * 3 + 10, WINDOW_HEIGHT - TILE_SIZE * 3, self.player.health, TILE_SIZE * 2)
+        self.health_bar = pygame.Rect(TILE_SIZE * 3 + 9, WINDOW_HEIGHT - TILE_SIZE * 3, self.player.health, TILE_SIZE * 2)
 
 
 class Player():
     def __init__(self):
         self.color = (255, 0, 0)
-        self.health = 227
+        self.health = 228
         self.position = Vector2(WINDOW_WIDTH // 2 - TILE_SIZE // 2, WINDOW_HEIGHT // 2 - TILE_SIZE // 2)
         self.rect = pygame.Rect(self.position.x, self.position.y, TILE_SIZE * 4, TILE_SIZE * 4)
         self.direction = 'left'
