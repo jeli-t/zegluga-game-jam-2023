@@ -47,6 +47,7 @@ class GameOver:
         self.font_img = self.base_font.render("GAME OVER", True, (198, 189, 0))
         self.font_img_glow = self.outline_font.render("GAME OVER", True, (11, 11, 11))
         self.start_btn = Button(WINDOW_WIDTH / 2, 440, "Restart", 40)
+        self.exit_btn = Button(WINDOW_WIDTH / 2, 530, "Exit", 40)
 
     def render(self, screen):
         screen.blit(self.transparent_surface, self.transparent_rect)

@@ -48,6 +48,9 @@ class Game:
             self.game_over_screen.render(self.screen)
             if self.game_over_screen.start_btn.draw(self.screen):
                 self.restart()
+            if self.game_over_screen.exit_btn.draw(self.screen):
+                pygame.quit()
+                sys.exit()
         else:
             self.hud.draw(self.screen)
         pygame.display.update()
@@ -61,7 +64,11 @@ class Game:
                     sys.exit()
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE and not self.game_over:
-                        InGameMenu(self.screen)
+                        if DEV:
+                            pygame.quit()
+                            sys.exit()
+                        else:
+                            InGameMenu(self.screen)
 
             if self.player.health <= 0:
                 self.cutscene = True
