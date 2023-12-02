@@ -50,8 +50,8 @@ class Player():
     def move(self, map):
         keys = pygame.key.get_pressed()
 
-        previous_position = self.position
-        previous_direction = self.direction
+        pos = [self.position.x, self.position.y]
+        direction = self.direction
 
         if keys[pygame.K_a]:
             self.position.x -= 10
@@ -76,13 +76,13 @@ class Player():
         if keys[pygame.K_r]:
             self.health -= 10
 
-        if previous_position == self.position:
+        if pos[0] == self.position.x and pos[1] == self.position.y:
             if self.moving:
                 self.current_animation = "idle"
                 self.load_animation("idle")
                 self.moving = False
         else:
-            if previous_direction is not self.direction:
+            if direction is not self.direction:
                 self.load_animation("run")
             if not self.moving:
                 self.current_animation = "run"
