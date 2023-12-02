@@ -23,7 +23,7 @@ class Player():
     def __init__(self):
         self.color = (255, 0, 0)
         self.health = 227
-        self.rect = pygame.Rect(WINDOW_WIDTH // 2 - TILE_SIZE // 2, WINDOW_HEIGHT // 2 - TILE_SIZE // 2, TILE_SIZE * 2, TILE_SIZE * 2)
+        self.rect = pygame.Rect(WINDOW_WIDTH // 2 - TILE_SIZE // 2, WINDOW_HEIGHT // 2 - TILE_SIZE // 2, TILE_SIZE * 4, TILE_SIZE * 4)
         self.direction = 'left'
         self.moving = False
         self.current_animation = "idle"
@@ -39,7 +39,7 @@ class Player():
         if self.direction == 'left':
             image = pygame.transform.flip(image, True, False)
         self.frames_number = animations[animation_name][1]
-        self.frames = [pygame.transform.scale(image.subsurface((i * TILE_SIZE, 0, TILE_SIZE, TILE_SIZE)), (TILE_SIZE * 2, TILE_SIZE * 2)) for i in range(self.frames_number)]
+        self.frames = [pygame.transform.scale(image.subsurface((i * TILE_SIZE, 0, TILE_SIZE, TILE_SIZE)), (TILE_SIZE * 4, TILE_SIZE * 4)) for i in range(self.frames_number)]
         self.frame_duration = animations[animation_name][2]
         self.current_frame = 0
         self.last_frame_change = pygame.time.get_ticks()

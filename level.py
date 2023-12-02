@@ -18,7 +18,8 @@ class Camera():
 class Room(pygame.sprite.Sprite):
     def __init__(self, offset, surf, groups):
         super().__init__(groups)
-        self.image = surf
+        # self.image = surf
+        self.image = pygame.transform.scale(surf, (TILE_SIZE * 2, TILE_SIZE * 2))
         self.offset = offset
         self.position = self.offset
         self.rect = self.image.get_rect(topleft = self.position)
@@ -42,7 +43,7 @@ class Map():
         for layer in tmx_data.visible_layers:
             if hasattr(layer, 'data'):
                 for x,y,surf in layer.tiles():
-                    offset = Vector2(x*TILE_SIZE, y*TILE_SIZE)
+                    offset = Vector2(x * TILE_SIZE * 2, y * TILE_SIZE * 2)
                     Room(offset = offset, surf = surf, groups = self.tile_group)
 
 
