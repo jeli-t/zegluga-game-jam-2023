@@ -39,7 +39,8 @@ class Player():
         # "animation_name":["path_to_assets", number_of_assets, frame_duration]
         animations = {"idle":["resources\player_idle\idle.png", 2, 500],
                     "run":["resources\player_run\\run_fix.png", 7, 50],
-                    "death":["resources\player_death\death.png", 4, 600]}
+                    "death":["resources\player_death\death.png", 4, 600],
+                    "attack":["resources\player_attack\\attack.png", 2, 100]}
         image = pygame.image.load(animations[animation_name][0]).convert_alpha()
         if self.direction == 'left':
             image = pygame.transform.flip(image, True, False)
