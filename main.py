@@ -81,6 +81,17 @@ class Game:
                         else:
                             InGameMenu(self.screen)
 
+            for zombie in self.zombies:
+                if zombie.rect.colliderect(pygame.Rect(self.player.position.x, self.player.position.y, PLAYER_SIZE, PLAYER_SIZE)):
+                    if zombie.current_animation != "attack":
+                        zombie.current_animation = "attack"
+                        zombie.load_animation("attack")
+                    self.player.health -= 1
+                else:
+                    if zombie.current_animation == "attack":
+                        zombie.current_animation = "idle"
+                        zombie.load_animation("idle")
+
             if self.player.health <= 0:
                 self.cutscene = True
                 self.player.current_animation = "death"
