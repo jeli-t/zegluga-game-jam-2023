@@ -18,7 +18,6 @@ class Camera():
 class Room(pygame.sprite.Sprite):
     def __init__(self, offset, surf, groups):
         super().__init__(groups)
-        # self.image = surf
         self.image = pygame.transform.scale(surf, (TILE_SIZE * 2, TILE_SIZE * 2))
         self.offset = offset
         self.position = self.offset

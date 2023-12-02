@@ -61,7 +61,11 @@ class Game:
                     sys.exit()
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE and not self.game_over:
-                        InGameMenu(self.screen)
+                        if DEV:
+                            pygame.quit()
+                            sys.exit()
+                        else:
+                            InGameMenu(self.screen)
 
             if self.player.health <= 0:
                 self.cutscene = True
@@ -70,7 +74,7 @@ class Game:
                 self.game_over = True
 
             if not self.game_over:
-                self.player.move()
+                self.player.move(self.level.map)
                 self.camera.update(self.player)
                 self.hud.update()
 

@@ -23,7 +23,7 @@ class Player():
     def __init__(self):
         self.color = (255, 0, 0)
         self.health = 227
-        self.rect = pygame.Rect(WINDOW_WIDTH // 2 - TILE_SIZE // 2, WINDOW_HEIGHT // 2 - TILE_SIZE // 2, TILE_SIZE * 4, TILE_SIZE * 4)
+        self.rect = pygame.Rect(WINDOW_WIDTH // 2 - TILE_SIZE, WINDOW_HEIGHT // 2 - TILE_SIZE, TILE_SIZE * 2, TILE_SIZE * 2)
         self.direction = 'left'
         self.moving = False
         self.current_animation = "idle"
@@ -45,7 +45,7 @@ class Player():
         self.last_frame_change = pygame.time.get_ticks()
 
 
-    def move(self):
+    def move(self, map):
         keys = pygame.key.get_pressed()
 
         pos = [self.rect.x, self.rect.y]
@@ -53,6 +53,11 @@ class Player():
 
         if keys[pygame.K_a]:
             self.rect.x -= 10
+            collision_list = pygame.sprite.spritecollide(self, map.hard_tiles, dokill=True)
+            if collision_list:
+                self.rect.x += 10
+                print("collision: ", collision_list[0].rect.x)
+                print("Self: ", self.rect.x)
             self.direction = 'left'
         if keys[pygame.K_d]:
             self.rect.x += 10
@@ -63,6 +68,8 @@ class Player():
             self.rect.y += 10
         if keys[pygame.K_r]:
             self.health -= 10
+
+        print(pos)
 
         if pos[0] == self.rect.x and pos[1] == self.rect.y:
             if self.moving:

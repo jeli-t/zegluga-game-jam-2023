@@ -17,11 +17,11 @@
             }
         },
         "main_floor.tmx": {
-            "scale": 0.75,
+            "scale": 0.5,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 686.6666666666666,
-                "y": 441.3333333333333
+                "x": 904,
+                "y": 474
             }
         }
     },
