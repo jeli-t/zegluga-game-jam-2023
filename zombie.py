@@ -8,7 +8,7 @@ class Zombie():
         self.position = Vector2(x, y)
         self.rect = pygame.Rect(self.position.x, self.position.y, PLAYER_SIZE, PLAYER_SIZE)
         self.speed = 5
-        self.direction = 'left'
+        self.direction = 'right'
         self.moving = False
         self.current_animation = "idle"
         self.load_animation(self.current_animation)
@@ -18,7 +18,8 @@ class Zombie():
         # "animation_name":["path_to_assets", number_of_assets, frame_duration]
         animations = {"idle":["resources\zombie_idle\idle.png", 3, 700],
                     "walk":["resources\zombie_walk\walk.png", 7, 200],
-                    "attack":["resources\zombie_attack\\attack.png", 5, 300]}
+                    "attack":["resources\zombie_attack\\attack.png", 5, 300],
+                    "death":["resources\zombie_death\death.png", 4, 200]}
         image = pygame.image.load(animations[animation_name][0]).convert_alpha()
         if self.direction == 'left':
             image = pygame.transform.flip(image, True, False)
