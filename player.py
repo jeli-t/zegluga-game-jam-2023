@@ -24,9 +24,10 @@ class Player():
         self.color = (255, 0, 0)
         self.health = 227
         self.rect = pygame.Rect(WINDOW_WIDTH // 2 - TILE_SIZE // 2, WINDOW_HEIGHT // 2 - TILE_SIZE // 2, TILE_SIZE * 2, TILE_SIZE * 2)
+        self.direction = 'left'
+        self.moving = False
         self.current_animation = "idle"
         self.load_animation(self.current_animation)
-        self.moving = False
 
 
     def load_animation(self, animation_name):
@@ -35,6 +36,8 @@ class Player():
                     "run":["resources\player_run\\run_fix.png", 7, 50],
                     "death":["resources\player_death\death.png", 4, 500]}
         image = pygame.image.load(animations[animation_name][0]).convert_alpha()
+        if self.direction == 'left':
+            image = pygame.transform.flip(image, True, False)
         self.frames_number = animations[animation_name][1]
         self.frames = [pygame.transform.scale(image.subsurface((i * TILE_SIZE, 0, TILE_SIZE, TILE_SIZE)), (TILE_SIZE * 2, TILE_SIZE * 2)) for i in range(self.frames_number)]
         self.frame_duration = animations[animation_name][2]
@@ -49,8 +52,10 @@ class Player():
 
         if keys[pygame.K_a]:
             self.rect.x -= 10
+            self.direction = 'left'
         if keys[pygame.K_d]:
             self.rect.x += 10
+            self.direction = 'right'
         if keys[pygame.K_w]:
             self.rect.y -= 10
         if keys[pygame.K_s]:
@@ -74,6 +79,5 @@ class Player():
         now = pygame.time.get_ticks()
         if now - self.last_frame_change > self.frame_duration:
             self.current_frame = (self.current_frame + 1) % self.frames_number
-            self.image = self.frames[self.current_frame]
             self.last_frame_change = now
         screen.blit(self.frames[self.current_frame], (self.rect.x - camera.position.x, self.rect.y - camera.position.y, TILE_SIZE, TILE_SIZE))
