@@ -35,16 +35,9 @@ class Game:
 
 
     def init_zombies(self):
-        zombie = Zombie(100, 0, 100)
-        self.zombies.append(zombie)
-        zombie = Zombie(200, 0, 100)
-        zombie.current_animation = "walk"
-        zombie.load_animation("walk")
-        self.zombies.append(zombie)
-        zombie = Zombie(300, 0, 100)
-        zombie.current_animation = "attack"
-        zombie.load_animation("attack")
-        self.zombies.append(zombie)
+        for spawn_point in self.level.zombie_spawns:
+            zombie = Zombie(spawn_point.x * TILE_SIZE * 2, spawn_point.y * TILE_SIZE * 2, 100)
+            self.zombies.append(zombie)
 
 
     def restart(self):
