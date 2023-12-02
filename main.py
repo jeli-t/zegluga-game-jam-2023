@@ -105,6 +105,8 @@ class Game:
                 self.player.move(self.level.map)
                 self.camera.update(self.player)
                 self.hud.update()
+            else:
+                self.zombieChannel.stop()
 
             self.render()
             pygame.time.Clock().tick(60)
