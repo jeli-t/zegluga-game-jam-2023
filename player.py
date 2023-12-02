@@ -49,6 +49,7 @@ class Player():
         keys = pygame.key.get_pressed()
 
         pos = [self.rect.x, self.rect.y]
+        direction = self.direction
 
         if keys[pygame.K_a]:
             self.rect.x -= 10
@@ -69,6 +70,8 @@ class Player():
                 self.load_animation("idle")
                 self.moving = False
         else:
+            if direction is not self.direction:
+                self.load_animation("run")
             if not self.moving:
                 self.current_animation = "run"
                 self.load_animation("run")
