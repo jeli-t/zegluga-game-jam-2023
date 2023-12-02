@@ -23,7 +23,7 @@ class Game:
         pygame.display.set_caption(GAME_TITLE)
         self.level = Level()
         self.camera = Camera()
-        self.player = Player()
+        self.player = Player(self.level.player_spawn)
         self.zombies = []
         self.init_zombies()
         self.hud = Hud(self.player)
@@ -35,16 +35,9 @@ class Game:
 
 
     def init_zombies(self):
-        zombie = Zombie(100, 0, 100)
-        self.zombies.append(zombie)
-        zombie = Zombie(200, 0, 100)
-        zombie.current_animation = "walk"
-        zombie.load_animation("walk")
-        self.zombies.append(zombie)
-        zombie = Zombie(300, 0, 100)
-        zombie.current_animation = "attack"
-        zombie.load_animation("attack")
-        self.zombies.append(zombie)
+        for spawn_point in self.level.zombie_spawns:
+            zombie = Zombie(spawn_point.x * TILE_SIZE * 2, spawn_point.y * TILE_SIZE * 2, 100)
+            self.zombies.append(zombie)
 
 
     def restart(self):
@@ -87,6 +80,17 @@ class Game:
                             sys.exit()
                         else:
                             InGameMenu(self.screen)
+
+            for zombie in self.zombies:
+                if zombie.rect.colliderect(pygame.Rect(self.player.position.x, self.player.position.y, PLAYER_SIZE, PLAYER_SIZE)):
+                    if zombie.current_animation != "attack":
+                        zombie.current_animation = "attack"
+                        zombie.load_animation("attack")
+                    self.player.health -= 1
+                else:
+                    if zombie.current_animation == "attack":
+                        zombie.current_animation = "idle"
+                        zombie.load_animation("idle")
 
             if self.player.health <= 0:
                 self.cutscene = True
