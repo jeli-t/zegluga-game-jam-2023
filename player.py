@@ -23,8 +23,10 @@ class Player():
     def __init__(self):
         self.color = (255, 0, 0)
         self.health = 227
+        self.rect = pygame.Rect(WINDOW_WIDTH // 2 - TILE_SIZE // 2, WINDOW_HEIGHT // 2 - TILE_SIZE // 2, TILE_SIZE * 2, TILE_SIZE * 2)
         self.current_animation = "idle"
         self.load_animation(self.current_animation)
+        self.moving = False
 
 
     def load_animation(self, animation_name):
@@ -36,13 +38,14 @@ class Player():
         self.frames_number = animations[animation_name][1]
         self.frames = [pygame.transform.scale(image.subsurface((i * TILE_SIZE, 0, TILE_SIZE, TILE_SIZE)), (TILE_SIZE * 2, TILE_SIZE * 2)) for i in range(self.frames_number)]
         self.frame_duration = animations[animation_name][2]
-        self.rect = pygame.Rect(WINDOW_WIDTH // 2 - TILE_SIZE // 2, WINDOW_HEIGHT // 2 - TILE_SIZE // 2, TILE_SIZE * 2, TILE_SIZE * 2)
         self.current_frame = 0
         self.last_frame_change = pygame.time.get_ticks()
 
 
     def move(self):
         keys = pygame.key.get_pressed()
+
+        pos = [self.rect.x, self.rect.y]
 
         if keys[pygame.K_a]:
             self.rect.x -= 10
@@ -54,6 +57,17 @@ class Player():
             self.rect.y += 10
         if keys[pygame.K_r]:
             self.health -= 10
+
+        if pos[0] == self.rect.x and pos[1] == self.rect.y:
+            if self.moving:
+                self.current_animation = "idle"
+                self.load_animation("idle")
+                self.moving = False
+        else:
+            if not self.moving:
+                self.current_animation = "run"
+                self.load_animation("run")
+                self.moving = True
 
 
     def draw(self, screen, camera):
