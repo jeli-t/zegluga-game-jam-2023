@@ -11,14 +11,14 @@ pygame.init()
 
 # Initialize the Pygame Music Mixer
 pygame.mixer.init()
-# Load the main music
-pygame.mixer.music.load(os.path.join("resources", "music", "CrisisCorridor.mp3"), "mp3")
-# Play the music in an infinite loop
-pygame.mixer.music.play(-1)
-
+# # Play the music in an infinite loop
+mainMusic = pygame.mixer.Sound(os.path.join("resources", "music", "CrisisCorridor.mp3"))
+mainMusic.set_volume(0.7)
+pygame.mixer.Channel(0).play(mainMusic, -1)
 
 class Game:
     def __init__(self):
+        self.zombieChannel = pygame.mixer.Channel(1)
         self.screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
         pygame.display.set_caption(GAME_TITLE)
         self.level = Level()
@@ -87,11 +87,13 @@ class Game:
                     if zombie.current_animation != "attack":
                         zombie.current_animation = "attack"
                         zombie.load_animation("attack")
+                        self.zombieChannel.play(pygame.mixer.Sound(os.path.join("resources", "music", "ZombieAttack.mp3")), -1)
                     self.player.health -= 1
                 else:
                     if zombie.current_animation == "attack":
                         zombie.current_animation = "idle"
                         zombie.load_animation("idle")
+                        self.zombieChannel.stop()
 
             if self.player.health <= 0:
                 self.cutscene = True
