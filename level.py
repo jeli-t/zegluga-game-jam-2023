@@ -55,6 +55,8 @@ class Map():
                         self.level.player_spawn = Vector2(x, y)
                     elif layer.name == "Zombie Spawn":
                         self.level.zombie_spawns.append(Vector2(x, y))
+                    elif layer.name == "Potions":
+                        self.level.potions.append(Vector2(x, y))
                     else:
                         Room(offset = offset, surf = surf, groups = self.soft_tiles)
 
@@ -63,6 +65,7 @@ class Level():
     def __init__(self):
         self.player_spawn = (0, 0)
         self.zombie_spawns = []
+        self.potions = []
         self.map = Map(self)
 
     def render(self, screen, camera):

@@ -5,6 +5,7 @@ from player import *
 from level import *
 from menu import *
 from zombie import *
+from objectives import *
 
 # Initialize Pygame
 pygame.init()
@@ -26,6 +27,8 @@ class Game:
         self.player = Player(self.level.player_spawn)
         self.zombies = []
         self.init_zombies()
+        self.potions = []
+        self.init_potions()
         self.hud = Hud(self.player)
         if not DEV:
             MainMenu(self.screen)
@@ -40,10 +43,20 @@ class Game:
             self.zombies.append(zombie)
 
 
+    def init_potions(self):
+        for potion_position in self.level.potions:
+            potion = Potion(potion_position.x * TILE_SIZE * 2, potion_position.y * TILE_SIZE * 2)
+            self.potions.append(potion)
+
+
     def restart(self):
         self.level = Level()
         self.camera = Camera()
-        self.player = Player()
+        self.player = Player(self.level.player_spawn)
+        self.zombies = []
+        self.init_zombies()
+        self.potions = []
+        self.init_potions()
         self.hud = Hud(self.player)
         self.game_over_screen = GameOver()
         self.game_over = False
@@ -55,6 +68,8 @@ class Game:
         self.player.draw(self.screen, self.camera)
         for zombie in self.zombies:
             zombie.draw(self.screen, self.camera)
+        for potion in self.potions:
+            potion.draw(self.screen, self.camera)
         if self.game_over:
             self.game_over_screen.render(self.screen)
             if self.game_over_screen.start_btn.draw(self.screen):

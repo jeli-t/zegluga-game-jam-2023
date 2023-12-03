@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "SampleMap.tmx",
+    "activeFile": "Map2.tmx",
     "expandedProjectPaths": [
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
@@ -12,24 +12,24 @@
             "scale": 2,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 1049,
-                "y": 179.5
+                "x": 800,
+                "y": 239.75
             }
         },
         "Map2.tmx": {
-            "scale": 0.3546666666666667,
-            "selectedLayer": 0,
+            "scale": 0.75,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 1201.1278195488721,
-                "y": 1201.1278195488721
+                "x": 517.3333333333333,
+                "y": 929.3333333333334
             }
         },
         "SampleMap.tmx": {
             "scale": 1.7733333333333332,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 238.53383458646618,
-                "y": 238.81578947368425
+                "x": 239.66165413533835,
+                "y": 239.37969924812032
             }
         },
         "Tilemap.tsx": {
@@ -62,13 +62,18 @@
     "map.width": 10,
     "openFiles": [
         "SampleMap.tmx",
-        "main_floor.tmx"
+        "main_floor.tmx",
+        "Map1.tmx",
+        "Map2.tmx",
+        "playground.tmx"
     ],
     "project": "untitled.tiled-project",
     "recentFiles": [
         "Map2.tmx",
+        "playground.tmx",
+        "SampleMap.tmx",
         "main_floor.tmx",
-        "SampleMap.tmx"
+        "Map1.tmx"
     ],
     "tileset.lastUsedFormat": "tsx"
 }
