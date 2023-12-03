@@ -43,17 +43,17 @@ class WinScreen:
         self.transparent_surface = pygame.Surface((WINDOW_WIDTH, WINDOW_HEIGHT), pygame.SRCALPHA)
         self.transparent_surface.fill((0, 0, 0, 200))
         self.transparent_rect = self.transparent_surface.get_rect()
-        self.font_img = self.base_font.render("YOU WIN", True, (198, 189, 0))
-        self.font_img_glow = self.outline_font.render("YOU WIN", True, (11, 11, 11))
+        self.font_img = self.base_font.render("YOU FOUND THE CURE", True, (198, 189, 0))
+        self.font_img_glow = self.outline_font.render("YOU FOUND THE CURE", True, (11, 11, 11))
         self.start_btn = Button(WINDOW_WIDTH / 2, 640, "Restart", 40)
         self.exit_btn = Button(WINDOW_WIDTH / 2, 730, "Exit", 40)
-        self.crown_surface = pygame.image.load(os.path.join("resources", "crown.png")).convert_alpha()
-        self.crown_img = pygame.transform.scale(self.crown_surface, (TILE_SIZE * 4, TILE_SIZE * 4))
-        self.crown_rect = self.crown_img.get_rect()
+        self.cabbage_surface = pygame.image.load(os.path.join("resources", "cabbage.png")).convert_alpha()
+        self.cabbage_img = pygame.transform.scale(self.cabbage_surface, (TILE_SIZE * 4, TILE_SIZE * 4))
+        self.cabbage_rect = self.cabbage_img.get_rect()
     
     def render(self, screen):
         screen.blit(self.transparent_surface, self.transparent_rect)
-        screen.blit(self.crown_img, ((WINDOW_WIDTH / 2) - (self.crown_rect.width / 2), 270))
+        screen.blit(self.cabbage_img, ((WINDOW_WIDTH / 2) - (self.cabbage_rect.width / 2), 270))
         screen.blit(self.font_img_glow, ((WINDOW_WIDTH / 2) - (self.font_img_glow.get_width() / 2) - 5, 420))
         screen.blit(self.font_img, ((WINDOW_WIDTH / 2) - (self.font_img.get_width() / 2), 410))
 
