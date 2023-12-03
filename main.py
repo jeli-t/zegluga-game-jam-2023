@@ -31,7 +31,7 @@ class Game:
         self.init_potions()
         self.cards = []
         self.init_cards()
-        self.hud = Hud(self.player)
+        self.health_bar = HealthBar(self.player)
         if not DEV:
             MainMenu(self.screen)
         self.game_over_screen = GameOver()
@@ -66,7 +66,7 @@ class Game:
         self.init_potions()
         self.cards = []
         self.init_cards()
-        self.hud = Hud(self.player)
+        self.health_bar = HealthBar(self.player)
         self.game_over_screen = GameOver()
         self.game_over = False
 
@@ -89,7 +89,7 @@ class Game:
                 pygame.quit()
                 sys.exit()
         else:
-            self.hud.draw(self.screen)
+            self.health_bar.draw(self.screen)
         pygame.display.update()
 
 
@@ -137,7 +137,7 @@ class Game:
             if not self.game_over:
                 self.player.move(self.level.map)
                 self.camera.update(self.player)
-                self.hud.update()
+                self.health_bar.update()
             else:
                 self.zombieChannel.stop()
 

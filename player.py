@@ -3,7 +3,7 @@ from pygame.math import Vector2
 from config import *
 
 
-class Hud():
+class HealthBar():
     def __init__(self, player):
         self.player = player
         self.health_bar_img = pygame.image.load("resources\health_bar.png")
