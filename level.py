@@ -62,6 +62,9 @@ class Map():
                     elif layer.name == "Finish":
                         self.level.finish = (Vector2(x, y))
                         Room(offset = offset, surf = surf, groups = self.soft_tiles)
+                    elif layer.name == "Doors":
+                        door = Room(offset = offset, surf = surf, groups = self.hard_tiles)
+                        self.level.doors.add(door)
                     else:
                         Room(offset = offset, surf = surf, groups = self.soft_tiles)
 
@@ -73,6 +76,7 @@ class Level():
         self.potions = []
         self.cards = []
         self.finish = Vector2(0, 0)
+        self.doors = pygame.sprite.Group()
         self.map = Map(self)
 
     def render(self, screen, camera):

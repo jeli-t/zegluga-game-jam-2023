@@ -132,9 +132,12 @@ class Game:
                         else:
                             InGameMenu(self.screen)
 
+            if self.counter.value == 3:
+                for door in self.level.doors:
+                    self.level.map.hard_tiles.remove(door)
+
             if self.cabage.rect.colliderect(pygame.Rect(self.player.position.x, self.player.position.y, PLAYER_SIZE, PLAYER_SIZE)):
-                if self.counter.value == 3:
-                    self.game_win = True
+                self.game_win = True
 
             for zombie in self.zombies:
                 zombie.move(self.player, self.camera, self.level.map)

@@ -9,11 +9,11 @@
     "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
         "Map1.tmx": {
-            "scale": 2,
+            "scale": 0.5,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 800,
-                "y": 239.75
+                "x": 640,
+                "y": 481
             }
         },
         "Map2.tmx": {
@@ -45,10 +45,10 @@
         },
         "playground.tmx": {
             "scale": 2.6599999999999997,
-            "selectedLayer": 3,
+            "selectedLayer": 4,
             "viewCenter": {
-                "x": 160.15037593984965,
-                "y": 160.15037593984962
+                "x": 159.77443609022558,
+                "y": 159.96240601503763
             }
         }
     },
@@ -69,11 +69,11 @@
     ],
     "project": "untitled.tiled-project",
     "recentFiles": [
-        "Map1.tmx",
-        "Map2.tmx",
-        "playground.tmx",
         "SampleMap.tmx",
-        "main_floor.tmx"
+        "main_floor.tmx",
+        "Map1.tmx",
+        "playground.tmx",
+        "Map2.tmx"
     ],
     "tileset.lastUsedFormat": "tsx"
 }
