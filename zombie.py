@@ -32,23 +32,56 @@ class Zombie():
         self.last_frame_change = pygame.time.get_ticks()
 
 
-    def move(self, target, camera):
+    def move(self, target, camera, map):
         distance = math.sqrt((self.rect.centerx - target.position.x)**2 + (self.rect.centery - target.position.y)**2)
         if distance / 100 < self.attack_arrea:
             if self.current_animation == "idle":
                 self.current_animation = "walk"
                 self.load_animation("walk")
-            direction_vector = target.position + Vector2(PLAYER_SIZE / 2, PLAYER_SIZE / 2) - pygame.math.Vector2(self.rect.center)
+            direction = target.position + Vector2(PLAYER_SIZE / 2, PLAYER_SIZE / 2) - pygame.math.Vector2(self.rect.center)
             try:
-                direction_vector.normalize_ip()
+                direction.normalize_ip()
             except ValueError:
                 pass
-            self.rect.x += int(direction_vector.x * self.speed)
-            self.rect.y += int(direction_vector.y * self.speed)
+
+            if direction.x < 0:
+                self.test_collisions(pygame.Rect(self.rect.x - camera.position.x - self.speed, self.rect.y - camera.position.y, PLAYER_SIZE, PLAYER_SIZE), map.hard_tiles)
+                if not self.collisions['left']:
+                    self.rect.x -= self.speed
+                    self.direction = 'left'
+            elif direction.x > 0:
+                self.test_collisions(pygame.Rect(self.rect.x - camera.position.x + self.speed, self.rect.y - camera.position.y, PLAYER_SIZE, PLAYER_SIZE), map.hard_tiles)
+                if not self.collisions['right']:
+                    self.rect.x += self.speed
+                    self.direction = 'right'
+            if direction.y < 0:
+                self.test_collisions(pygame.Rect(self.rect.x - camera.position.x, self.rect.y - camera.position.y - self.speed, PLAYER_SIZE, PLAYER_SIZE), map.hard_tiles)
+                if not self.collisions['top']:
+                    self.rect.y -= self.speed
+            elif direction.y > 0:
+                self.test_collisions(pygame.Rect(self.rect.x - camera.position.x, self.rect.y - camera.position.y + self.speed, PLAYER_SIZE, PLAYER_SIZE), map.hard_tiles)
+                if not self.collisions['bottom']:
+                    self.rect.y += self.speed
+
         else:
             if self.current_animation == "walk":
                 self.current_animation = "idle"
                 self.load_animation("idle")
+
+
+    def test_collisions(self, hit_box, tiles):
+        self.collisions = {'left' : False, 'right' : False, 'top' : False, 'bottom' : False}
+        for tile in tiles:
+            if hit_box.colliderect(tile.rect):
+                if hit_box.x <= tile.rect.x:
+                    self.collisions['right'] = True
+                if hit_box.x >= tile.rect.x:
+                    self.collisions['left'] = True
+                if hit_box.y >= tile.rect.y:
+                    self.collisions['top'] = True
+                if hit_box.y <= tile.rect.y:
+                    self.collisions['bottom'] = True
+
 
 
     def draw(self, screen, camera):

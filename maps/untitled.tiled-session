@@ -17,11 +17,11 @@
             }
         },
         "Map2.tmx": {
-            "scale": 0.75,
-            "selectedLayer": 3,
+            "scale": 0.25,
+            "selectedLayer": 6,
             "viewCenter": {
-                "x": 517.3333333333333,
-                "y": 929.3333333333334
+                "x": 664,
+                "y": 996
             }
         },
         "SampleMap.tmx": {

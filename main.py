@@ -113,7 +113,7 @@ class Game:
                             InGameMenu(self.screen)
 
             for zombie in self.zombies:
-                zombie.move(self.player, self.camera)
+                zombie.move(self.player, self.camera, self.level.map)
                 if zombie.rect.colliderect(pygame.Rect(self.player.position.x, self.player.position.y, PLAYER_SIZE, PLAYER_SIZE)):
                     if zombie.current_animation != "attack":
                         zombie.current_animation = "attack"
