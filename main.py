@@ -131,6 +131,11 @@ class Game:
                         self.player.health = 228
                     self.potions.remove(potion)
 
+            for card in self.cards:
+                if card.rect.colliderect(pygame.Rect(self.player.position.x, self.player.position.y, PLAYER_SIZE, PLAYER_SIZE)):
+                    self.counter.value += 1
+                    self.cards.remove(card)
+
             if self.player.health <= 0:
                 self.cutscene = True
                 self.player.current_animation = "death"
