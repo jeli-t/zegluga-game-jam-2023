@@ -69,11 +69,11 @@
     ],
     "project": "untitled.tiled-project",
     "recentFiles": [
+        "Map1.tmx",
         "Map2.tmx",
         "playground.tmx",
         "SampleMap.tmx",
-        "main_floor.tmx",
-        "Map1.tmx"
+        "main_floor.tmx"
     ],
     "tileset.lastUsedFormat": "tsx"
 }

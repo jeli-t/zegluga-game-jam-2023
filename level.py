@@ -29,7 +29,7 @@ class Room(pygame.sprite.Sprite):
 
 
 class Map():
-    def __init__(self, level, file='maps/Map2.tmx'):
+    def __init__(self, level, file='maps/playground.tmx'):
         self.level = level
         self.soft_tiles = pygame.sprite.Group()     # tiles that do not collide with the player
         self.hard_tiles = pygame.sprite.Group()     # tiles that collide with the player
@@ -41,7 +41,7 @@ class Map():
         self.hard_tiles.update(camera)
         self.hard_tiles.draw(screen)
 
-    def load_level(self, file='maps/Map2.tmx'):
+    def load_level(self, file='maps/playground.tmx'):
         tmx_data = load_pygame(file)
         for layer in tmx_data.visible_layers:
             if hasattr(layer, 'data'):
@@ -59,6 +59,9 @@ class Map():
                         self.level.potions.append(Vector2(x, y))
                     elif layer.name == "Cards":
                         self.level.cards.append(Vector2(x, y))
+                    elif layer.name == "Finish":
+                        self.level.finish = (Vector2(x, y))
+                        Room(offset = offset, surf = surf, groups = self.soft_tiles)
                     else:
                         Room(offset = offset, surf = surf, groups = self.soft_tiles)
 
@@ -69,6 +72,7 @@ class Level():
         self.zombie_spawns = []
         self.potions = []
         self.cards = []
+        self.finish = Vector2(0, 0)
         self.map = Map(self)
 
     def render(self, screen, camera):

@@ -4,6 +4,12 @@ from pygame.math import Vector2
 from config import *
 
 
+class Cabage():
+    def __init__(self, x, y):
+        self.position = Vector2(x, y)
+        self.rect = pygame.Rect(self.position.x, self.position.y, TILE_SIZE * 2, TILE_SIZE * 2)
+
+
 class Counter():
     def __init__(self):
         self.value = 0

@@ -31,6 +31,7 @@ class Game:
         self.init_potions()
         self.cards = []
         self.init_cards()
+        self.init_finish()
         self.health_bar = HealthBar(self.player)
         self.counter = Counter()
         self.instruction = Instruction()
@@ -39,7 +40,12 @@ class Game:
         self.game_over_screen = GameOver()
         self.win_screen = WinScreen()
         self.game_over = False
+        self.game_win = False
         self.main_loop()
+
+
+    def init_finish(self):
+        self.cabage = Cabage(self.level.finish.x * TILE_SIZE * 2, self.level.finish.y * TILE_SIZE * 2)
 
 
     def init_zombies(self):
@@ -52,6 +58,7 @@ class Game:
         for potion_position in self.level.potions:
             potion = Potion(potion_position.x * TILE_SIZE * 2, potion_position.y * TILE_SIZE * 2)
             self.potions.append(potion)
+
 
     def init_cards(self):
         for card_position in self.level.cards:
@@ -69,11 +76,15 @@ class Game:
         self.init_potions()
         self.cards = []
         self.init_cards()
+        self.init_finish()
         self.health_bar = HealthBar(self.player)
         self.counter = Counter()
+        self.instruction = Instruction()
         self.game_over_screen = GameOver()
         self.win_screen = WinScreen()
         self.game_over = False
+        self.game_win = False
+        self.main_loop()
 
 
     def render(self):
@@ -87,7 +98,14 @@ class Game:
             potion.draw(self.screen, self.camera)
         for card in self.cards:
             card.draw(self.screen, self.camera)
-        if self.game_over:
+        if self.game_win:
+            self.win_screen.render(self.screen)
+            if self.win_screen.start_btn.draw(self.screen):
+                self.restart()
+            if self.win_screen.exit_btn.draw(self.screen):
+                pygame.quit()
+                sys.exit()
+        elif self.game_over:
             self.game_over_screen.render(self.screen)
             if self.game_over_screen.start_btn.draw(self.screen):
                 self.restart()
@@ -113,6 +131,10 @@ class Game:
                             sys.exit()
                         else:
                             InGameMenu(self.screen)
+
+            if self.cabage.rect.colliderect(pygame.Rect(self.player.position.x, self.player.position.y, PLAYER_SIZE, PLAYER_SIZE)):
+                if self.counter.value == 3:
+                    self.game_win = True
 
             for zombie in self.zombies:
                 zombie.move(self.player, self.camera, self.level.map)
