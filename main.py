@@ -113,6 +113,8 @@ class Game:
             for potion in self.potions:
                 if potion.rect.colliderect(pygame.Rect(self.player.position.x, self.player.position.y, PLAYER_SIZE, PLAYER_SIZE)):
                     self.player.health += 50
+                    if self.player.health > 228:
+                        self.player.health = 228
                     self.potions.remove(potion)
 
             if self.player.health <= 0:
