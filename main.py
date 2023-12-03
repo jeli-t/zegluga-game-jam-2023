@@ -37,6 +37,7 @@ class Game:
         if not DEV:
             MainMenu(self.screen)
         self.game_over_screen = GameOver()
+        self.win_screen = WinScreen()
         self.game_over = False
         self.main_loop()
 
@@ -71,6 +72,7 @@ class Game:
         self.health_bar = HealthBar(self.player)
         self.counter = Counter()
         self.game_over_screen = GameOver()
+        self.win_screen = WinScreen()
         self.game_over = False
 
 
