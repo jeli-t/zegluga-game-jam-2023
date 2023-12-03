@@ -1,4 +1,5 @@
 import pygame
+import math
 from pygame.math import Vector2
 from config import *
 
@@ -8,7 +9,7 @@ class Zombie():
         self.position = Vector2(x, y)
         self.rect = pygame.Rect(self.position.x, self.position.y, PLAYER_SIZE, PLAYER_SIZE)
         self.speed = 2
-        self.follow_reach = 2 * TILE_SIZE * 2
+        self.attack_arrea = 4
         self.direction = 'left'
         self.moving = False
         self.current_animation = "idle"
@@ -31,18 +32,19 @@ class Zombie():
         self.last_frame_change = pygame.time.get_ticks()
 
 
-    def move(self, target):
-        if abs(self.position.x - target.x) <= self.follow_reach or abs(self.position.y - target.y) <= self.follow_reach:
-            direction_vector = target + Vector2(PLAYER_SIZE / 2, PLAYER_SIZE / 2) - pygame.math.Vector2(self.rect.center)
+    def move(self, target, camera):
+        distance = math.sqrt((self.rect.centerx - target.position.x)**2 + (self.rect.centery - target.position.y)**2)
+        if distance / 100 < self.attack_arrea:
+            if self.current_animation == "idle":
+                self.current_animation = "walk"
+                self.load_animation("walk")
+            direction_vector = target.position + Vector2(PLAYER_SIZE / 2, PLAYER_SIZE / 2) - pygame.math.Vector2(self.rect.center)
             try:
                 direction_vector.normalize_ip()
             except ValueError:
                 pass
             self.rect.x += int(direction_vector.x * self.speed)
             self.rect.y += int(direction_vector.y * self.speed)
-            if self.current_animation == "idle":
-                self.current_animation = "walk"
-                self.load_animation("walk")
         else:
             if self.current_animation == "walk":
                 self.current_animation = "idle"

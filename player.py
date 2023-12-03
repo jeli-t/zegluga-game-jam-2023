@@ -27,7 +27,7 @@ class Player():
         self.position = Vector2(WINDOW_WIDTH // 2 - TILE_SIZE // 2, WINDOW_HEIGHT // 2 - TILE_SIZE // 2)
         self.rect = pygame.Rect(self.position.x, self.position.y, PLAYER_SIZE, PLAYER_SIZE)
         self.position = Vector2(spawn_point.x * TILE_SIZE * 2, spawn_point.y * TILE_SIZE * 2)
-        self.direction = 'left'
+        self.direction = 'right'
         self.moving = False
         self.speed = 10
         self.collisions = {'left' : False, 'right' : False, 'top' : False, 'bottom' : False}
