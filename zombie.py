@@ -33,6 +33,9 @@ class Zombie():
 
 
     def move(self, target, camera, map):
+        previous_position = [self.rect.x, self.rect.y]
+        previous_direction = self.direction
+    
         distance = math.sqrt((self.rect.centerx - target.position.x)**2 + (self.rect.centery - target.position.y)**2)
         if distance / 100 < self.attack_arrea:
             if self.current_animation == "idle":
@@ -62,11 +65,24 @@ class Zombie():
                 self.test_collisions(pygame.Rect(self.rect.x - camera.position.x, self.rect.y - camera.position.y + self.speed, PLAYER_SIZE, PLAYER_SIZE), map.hard_tiles)
                 if not self.collisions['bottom']:
                     self.rect.y += self.speed
-
         else:
             if self.current_animation == "walk":
                 self.current_animation = "idle"
                 self.load_animation("idle")
+
+        # change animations depending on movement
+        if previous_position[0] == self.rect.x and previous_position[1] == self.rect.y:
+            if self.moving:
+                self.current_animation = "idle"
+                self.load_animation("idle")
+                self.moving = False
+        else:
+            if previous_direction is not self.direction:
+                self.load_animation("walk")
+            if not self.moving:
+                self.current_animation = "walk"
+                self.load_animation("walk")
+                self.moving = True
 
 
     def test_collisions(self, hit_box, tiles):
