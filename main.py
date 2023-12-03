@@ -32,6 +32,7 @@ class Game:
         self.cards = []
         self.init_cards()
         self.health_bar = HealthBar(self.player)
+        self.counter = Counter()
         if not DEV:
             MainMenu(self.screen)
         self.game_over_screen = GameOver()
@@ -67,6 +68,7 @@ class Game:
         self.cards = []
         self.init_cards()
         self.health_bar = HealthBar(self.player)
+        self.counter = Counter()
         self.game_over_screen = GameOver()
         self.game_over = False
 
@@ -89,6 +91,7 @@ class Game:
                 pygame.quit()
                 sys.exit()
         else:
+            self.counter.draw(self.screen)
             self.health_bar.draw(self.screen)
         pygame.display.update()
 

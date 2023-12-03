@@ -1,6 +1,24 @@
 import pygame
+import os
 from pygame.math import Vector2
 from config import *
+
+
+class Counter():
+    def __init__(self):
+        self.value = 0
+        self.base_font = pygame.font.Font(os.path.join("resources", "fonts", "PixeloidSans-Bold.ttf"), 30)
+        self.transparent_surface = pygame.Surface((310, TILE_SIZE * 4), pygame.SRCALPHA)
+        self.transparent_surface.fill((0, 0, 0, 200))
+        self.transparent_rect = pygame.Rect(TILE_SIZE, WINDOW_HEIGHT - TILE_SIZE * 7, 310, TILE_SIZE * 4)
+        self.header = self.base_font.render("Access cards:", True, (198, 189, 0))
+
+    def draw(self, screen):
+        screen.blit(self.transparent_surface, self.transparent_rect)
+        screen.blit(self.header, ((self.transparent_rect.centerx) - (self.header.get_width() / 2), WINDOW_HEIGHT - TILE_SIZE * 6))
+        number = str(self.value) + "/3"
+        number_text = self.base_font.render(number, True, (198, 189, 0))
+        screen.blit(number_text, ((self.transparent_rect.centerx) - (number_text.get_width() / 2), WINDOW_HEIGHT - TILE_SIZE * 5 + 10))
 
 
 class Potion():
