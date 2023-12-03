@@ -43,7 +43,7 @@ class Game:
     def restart(self):
         self.level = Level()
         self.camera = Camera()
-        self.player = Player()
+        self.player = Player(self.level.player_spawn)
         self.hud = Hud(self.player)
         self.game_over_screen = GameOver()
         self.game_over = False
