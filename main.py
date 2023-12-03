@@ -110,6 +110,11 @@ class Game:
                         zombie.load_animation("idle")
                         self.zombieChannel.stop()
 
+            for potion in self.potions:
+                if potion.rect.colliderect(pygame.Rect(self.player.position.x, self.player.position.y, PLAYER_SIZE, PLAYER_SIZE)):
+                    self.player.health += 50
+                    self.potions.remove(potion)
+
             if self.player.health <= 0:
                 self.cutscene = True
                 self.player.current_animation = "death"
