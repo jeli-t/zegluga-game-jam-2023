@@ -29,6 +29,8 @@ class Game:
         self.init_zombies()
         self.potions = []
         self.init_potions()
+        self.cards = []
+        self.init_cards()
         self.hud = Hud(self.player)
         if not DEV:
             MainMenu(self.screen)
@@ -48,6 +50,11 @@ class Game:
             potion = Potion(potion_position.x * TILE_SIZE * 2, potion_position.y * TILE_SIZE * 2)
             self.potions.append(potion)
 
+    def init_cards(self):
+        for card_position in self.level.cards:
+            card = Card(card_position.x * TILE_SIZE * 2, card_position.y * TILE_SIZE * 2)
+            self.cards.append(card)
+
 
     def restart(self):
         self.level = Level()
@@ -57,6 +64,8 @@ class Game:
         self.init_zombies()
         self.potions = []
         self.init_potions()
+        self.cards = []
+        self.init_cards()
         self.hud = Hud(self.player)
         self.game_over_screen = GameOver()
         self.game_over = False
@@ -70,6 +79,8 @@ class Game:
             zombie.draw(self.screen, self.camera)
         for potion in self.potions:
             potion.draw(self.screen, self.camera)
+        for card in self.cards:
+            card.draw(self.screen, self.camera)
         if self.game_over:
             self.game_over_screen.render(self.screen)
             if self.game_over_screen.start_btn.draw(self.screen):
