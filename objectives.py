@@ -29,8 +29,7 @@ class Counter():
 class Instruction():
     def __init__(self):
         self.base_font = pygame.font.Font(os.path.join("resources", "fonts", "PixeloidSans-Bold.ttf"), 30)
-        self.instructions = """Zasady:\n
-Twoim zadaniem jest zdobycie trzech kart dostępu i znalezienie windy, w której znajduje się lek na zarazę"""
+        self.instructions = "You're the last hope in the plague world. Your main objective is to find 3 access cards to unlock the cure for the virus."
 
     def draw(self, screen, camera):
         collection = [word.split(' ') for word in self.instructions.splitlines()]
