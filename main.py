@@ -168,7 +168,7 @@ class Game:
                 self.player.load_animation("death")
                 self.game_over = True
 
-            if not self.game_over:
+            if not self.game_over and not self.game_win:
                 self.player.move(self.level.map)
                 self.camera.update(self.player)
                 self.health_bar.update()
