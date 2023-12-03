@@ -20,6 +20,28 @@ class Counter():
         number_text = self.base_font.render(number, True, (198, 189, 0))
         screen.blit(number_text, ((self.transparent_rect.centerx) - (number_text.get_width() / 2), WINDOW_HEIGHT - TILE_SIZE * 5 + 10))
 
+class Instruction():
+    def __init__(self):
+        self.base_font = pygame.font.Font(os.path.join("resources", "fonts", "PixeloidSans-Bold.ttf"), 30)
+        self.instructions = """Zasady:\n
+Twoim zadaniem jest zdobycie trzech kart dostępu i znalezienie windy, w której znajduje się lek na zarazę"""
+
+    def draw(self, screen, camera):
+        collection = [word.split(' ') for word in self.instructions.splitlines()]
+        space = self.base_font.size(' ')[0]
+        defaultX = -camera.position.x + 4 * TILE_SIZE
+        x,y = (defaultX, -camera.position.y - TILE_SIZE * 8)
+        for lines in collection:
+            for words in lines:
+                word_surface = self.base_font.render(words, True, (198, 189, 0))
+                word_width , word_height = word_surface.get_size()
+                if x + word_width >= defaultX + 800:
+                    x = defaultX
+                    y += word_height
+                screen.blit(word_surface, (x - len(lines) * 17, y))
+                x += word_width + space
+            x = defaultX
+            y += word_height
 
 class Potion():
     def __init__(self, x, y):

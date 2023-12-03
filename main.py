@@ -33,6 +33,7 @@ class Game:
         self.init_cards()
         self.health_bar = HealthBar(self.player)
         self.counter = Counter()
+        self.instruction = Instruction()
         if not DEV:
             MainMenu(self.screen)
         self.game_over_screen = GameOver()
@@ -77,6 +78,7 @@ class Game:
         self.screen.fill((66, 59, 77))
         self.level.render(self.screen, self.camera)
         self.player.draw(self.screen, self.camera)
+        self.instruction.draw(self.screen, self.camera)
         for zombie in self.zombies:
             zombie.draw(self.screen, self.camera)
         for potion in self.potions:
